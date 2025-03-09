@@ -13,7 +13,7 @@ touchBox.addEventListener("pointerdown", () => {
   console.log("Touch box clicked");
 });
 
-touchBox.addEventListener("touchstart", (event) => {
+document.addEventListener("touchstart", (event) => {
   console.log("All touches:", event.touches.length);
   for (let i = 0; i < event.touches.length; i++) {
     console.log(
@@ -24,10 +24,10 @@ touchBox.addEventListener("touchstart", (event) => {
   }
 });
 
-touchBox.addEventListener("touchmove", (event) => {
+document.addEventListener("touchmove", (event) => {
   console.log("Touches moving:", event.touches.length);
 });
 
-touchBox.addEventListener("touchend", (event) => {
+document.addEventListener("touchend", (event) => {
   console.log("Touch ended. Remaining touches:", event.touches.length);
 });
