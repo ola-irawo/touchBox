@@ -1,33 +1,49 @@
-const touchBox = document.querySelector(".touchBox");
-const touchCountDisplay = document.getElementById("touchCount");
+document.addEventListener("DOMContentLoaded", function () {
+  const touchBox = document.querySelector(".touchBox");
 
-document.addEventListener("touchstart", (event) => {
-  touchCountDisplay.textContent = `Touches: ${event.touches.length}`;
-});
-
-document.addEventListener("touchend", (event) => {
-  touchCountDisplay.textContent = `Touches: ${event.touches.length}`;
-});
-
-touchBox.addEventListener("pointerdown", () => {
-  console.log("Touch box clicked");
-});
-
-document.addEventListener("touchstart", (event) => {
-  console.log("All touches:", event.touches.length);
-  for (let i = 0; i < event.touches.length; i++) {
-    console.log(
-      `Touch ${i + 1}: X=${event.touches[i].clientX}, Y=${
-        event.touches[i].clientY
-      }`
-    );
+  // Function to generate a random color
+  function getRandomColor() {
+    return `hsl(${Math.random() * 360}, 100%, 50%)`;
   }
-});
 
-document.addEventListener("touchmove", (event) => {
-  console.log("Touches moving:", event.touches.length);
-});
+  // Track touches
+  touchBox.addEventListener("touchstart", (event) => {
+    event.preventDefault();
+    Array.from(event.touches).forEach((touch) => {
+      let touchElement = document.createElement("div");
+      touchElement.classList.add("touchCircle");
+      touchElement.style.backgroundColor = getRandomColor();
+      touchElement.style.left = `${touch.clientX - touchBox.offsetLeft}px`;
+      touchElement.style.top = `${touch.clientY - touchBox.offsetTop}px`;
+      touchElement.dataset.identifier = touch.identifier;
+      touchBox.appendChild(touchElement);
+    });
+  });
 
-document.addEventListener("touchend", (event) => {
-  console.log("Touch ended. Remaining touches:", event.touches.length);
+  // Move touches
+  touchBox.addEventListener("touchmove", (event) => {
+    event.preventDefault();
+    Array.from(event.touches).forEach((touch) => {
+      let touchElement = document.querySelector(
+        `[data-identifier='${touch.identifier}']`
+      );
+      if (touchElement) {
+        touchElement.style.left = `${touch.clientX - touchBox.offsetLeft}px`;
+        touchElement.style.top = `${touch.clientY - touchBox.offsetTop}px`;
+      }
+    });
+  });
+
+  // Remove touches
+  touchBox.addEventListener("touchend", (event) => {
+    event.preventDefault();
+    Array.from(event.changedTouches).forEach((touch) => {
+      let touchElement = document.querySelector(
+        `[data-identifier='${touch.identifier}']`
+      );
+      if (touchElement) {
+        touchElement.remove();
+      }
+    });
+  });
 });
