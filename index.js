@@ -33,13 +33,21 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   const pickTouchElement = () => {
-    const touch = document.querySelectorAll(".touchCircle");
-    const randomTouch = touch[Math.floor(Math.random() * touch.length)];
-    console.log({ randomTouch });
-    if (randomTouch) {
-      setTimeout(() => {
-        randomTouch.classList.add("picked");
-      }, 3000);
+    // const touch = document.querySelectorAll(".touchCircle");
+    // const randomTouch = touch[Math.floor(Math.random() * touch.length)];
+    // console.log({ randomTouch });
+    // if (randomTouch) {
+    //   setTimeout(() => {
+    //     randomTouch.classList.add("picked");
+    //   }, 3000);
+    // }
+
+    const touchElements = document.querySelectorAll(".touchCircle");
+    if (touchElements.length > 0) {
+      touchElements.forEach((el) => el.classList.remove("highlight"));
+      const randomTouch =
+        touchElements[Math.floor(Math.random() * touchElements.length)];
+      randomTouch.classList.add("picked");
     }
   };
 
