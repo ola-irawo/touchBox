@@ -112,9 +112,11 @@ document.addEventListener("DOMContentLoaded", function () {
         `[data-identifier='${touch.identifier}']`
       );
       const highlight = document.querySelector(".highlight");
+      const picked = document.querySelector(".picked");
       if (touchElement) {
         touchElement.remove();
         highlight.remove();
+        picked.remove();
       }
     });
   });
